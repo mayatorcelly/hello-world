@@ -1,18 +1,18 @@
-# Tennis game in Python
-
-
+# Juego Tenis in Python
 
 import turtle
 
+#ventana
 wn = turtle.Screen()
-wn.title('Tennis by @Torcelly')
+wn.title('Tenis by @Torcelly')
 wn.bgcolor('green')
 wn.setup(width=800, height=600)
 wn.tracer(0)
 
-#Puntuacion
-puntuacion_1 = 0
-puntuacion_2 = 0
+#puntuacion
+puntuacion1 = 0
+puntuacion2 = 0
+
 
 # Jugador 1
 Jugador_1 = turtle.Turtle()
@@ -35,21 +35,27 @@ Jugador_2.goto(350, 0)
 # pelota
 pelota = turtle.Turtle()
 pelota.speed(0)
-pelota.shape('square')
-pelota.color('white')
+pelota.shape('circle')
+pelota.color('yellow')
 pelota.penup()
 pelota.goto(0, 0)
-pelota.dx = 0.1
-pelota.dy = 0.1
+pelota.dx = 0.3
+pelota.dy = 0.3
 
-# lapiz
+#linea divisoria
+division = turtle.Turtle()
+division.color('white')
+division.goto(0, 400)
+division.goto(0, -400)
+
+# marcador
 pen = turtle.Turtle()
 pen.speed(0)
 pen.color('white')
 pen.penup()
 pen.hideturtle()
-pen.goto(0, 260)
-pen.write('Player A: 0 Player B: 0'), align= 'center', font=('Courier', 24, 'normal')
+pen.goto(2, 240)
+pen.write('Jugador 1: 0     Jugador 2: 0', align = 'center', font=('courier', 18, 'normal'))
 
 #Funcion
 def Jugador_1_arriba():
@@ -84,7 +90,6 @@ wn.onkeypress(Jugador_2_abajo, 'l')
 while True:
     wn.update()
 
-
     # pelotear
     pelota.setx(pelota.xcor() + pelota.dx)
     pelota.sety(pelota.ycor() + pelota.dy)
@@ -101,20 +106,24 @@ while True:
     if pelota.xcor() > 390:
         pelota.goto(0, 0)
         pelota.dx *= -1
-        puntuacion_1 += 1
+        puntuacion1 += 1
+        pen.clear()
+        pen.write('Jugador 1: {}     Jugador 2: {}'.format(puntuacion1, puntuacion2), align = 'center', font=('courier', 18, 'normal'))
 
     if pelota.xcor() < -390:
         pelota.goto(0, 0)
         pelota.dx *= -1
-        puntuacion_2 *= 1
+        puntuacion2 += 1
+        pen.clear()
+        pen.write('Jugador 1: {}     Jugador 2: {}'.format(puntuacion1, puntuacion2), align = 'center', font=('courier', 18, 'normal'))
 
     # golpeo raquetas y pelota
-    
-    if (pelota.xcor() > 340 and (pelota.xcor() < 350) and (pelota.ycor() < Jugador_2.ycor() + 40 and pelota.ycor() > Jugador_2.ycor() -40)
-       pelota.setx(-340) 
-       pelota.dx *= -1
+    if ((pelota.xcor() > 340 and pelota.xcor() < 350)
+            and (pelota.ycor() < Jugador_2.ycor()) + 50
+            and pelota.ycor() > Jugador_2.ycor() - 50):
+        pelota.dx *= -1
 
-    if (pelota.xcor() < -340 and pelota.xcor() > -350) and (pelota.ycor() < Jugador_1.ycor() + 40 and pelota.ycor() > Jugador_1.ycor() -40)
-       pelota.setx(-340) 
-       pelota.dx *= -1
-
+    if ((pelota.xcor() < -340 and pelota.xcor() > -350)
+            and (pelota.ycor() < Jugador_1.ycor()) + 50
+            and pelota.ycor() > Jugador_1.ycor() - 50):
+        pelota.dx *= -1
